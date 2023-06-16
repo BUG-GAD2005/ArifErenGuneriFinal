@@ -18,6 +18,8 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < gridHeight; y++)
             {
                 var spawnedTile = Instantiate(tilePrefab, new Vector2(x,y), Quaternion.identity);
+                spawnedTile.x = x;
+                spawnedTile.y = y;
                 spawnedTile.name = $"Tile {x},{y}";
                 tiles[new Vector2(x, y)] = spawnedTile;
             }
