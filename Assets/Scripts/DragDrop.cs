@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -107,9 +108,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
         Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         RaycastHit2D hit = Physics2D.Raycast(ray, ray);
-        if (hit.collider != null)
+        if (hit.transform != null)
         {
             Tile tileOnMouse = hit.collider.GetComponent<Tile>();
+            
             Tile tileAbove;
             
             if (tileOnMouse.y + 1 < 10)
@@ -120,37 +122,118 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             {
                 tileAbove = null;
             }
-            
 
-                
 
-            Tile tileTwoAbove = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x, tileOnMouse.y + 2));
-            Tile tileOnRight = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x + 1, tileOnMouse.y));
-            Tile tileOnLeft = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x - 1, tileOnMouse.y));
-            Tile tileOnTwoRight = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x + 2, tileOnMouse.y));
-            Tile tileOnTwoLeft = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x - 2, tileOnMouse.y));
-            Tile tileOnTwoRightOneAbove = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x + 2, tileOnMouse.y + 1));
-            Tile tileOnTwoLeftOneAbove = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x - 2, tileOnMouse.y + 1));
+            Tile tileBelow;
+
+            if (tileOnMouse.y - 1 > -1)
+            {
+                tileBelow = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x, tileOnMouse.y - 1));
+            }
+            else
+            {
+                tileBelow = null;
+            }
+
+
+            Tile tileOnRight;
+
+            if (tileOnMouse.x + 1 < 10)
+            {
+                tileOnRight = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x + 1, tileOnMouse.y));
+            }
+            else
+            {
+                tileOnRight = null;
+            }
+
+
+            Tile tileOnLeft;
+
+            if (tileOnMouse.x -1 > -1)
+            {
+                tileOnLeft = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x - 1, tileOnMouse.y));
+            }
+            else
+            {
+                tileOnLeft = null;
+            }
+
+
+            Tile tileOnTwoRight;
+
+            if (tileOnMouse.x + 2 < 10)
+            {
+                tileOnTwoRight = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x + 2, tileOnMouse.y));
+            }
+            else
+            {
+                tileOnTwoRight = null;
+            }
+
+
+            Tile tileOnTwoLeft;
+
+            if (tileOnMouse.x - 2 > -1)
+            {
+                tileOnTwoLeft = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x - 2, tileOnMouse.y));
+            }
+            else
+            {
+                tileOnTwoLeft = null;
+            }
+
+
+            Tile tileOnTwoRightOneAbove;
+
+            if (tileOnMouse.x + 2 < 10 && tileOnMouse.y + 1 < 10)
+            {
+                tileOnTwoRightOneAbove = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x + 2, tileOnMouse.y + 1));
+            }
+            else
+            {
+                tileOnTwoRightOneAbove = null;
+            }
+
+
+            Tile tileOnTwoLeftOneAbove;
+
+            if (tileOnMouse.x - 2 > -1 && tileOnMouse.y + 1 < 10)
+            {
+                tileOnTwoLeftOneAbove = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x - 2, tileOnMouse.y + 1));
+            }
+            else
+            {
+                tileOnTwoLeftOneAbove = null;
+            }
+
+
 
             switch (spawnedUnitEnum)
             {
                 case unitEnum.pawn:
 
-
-                    if (!tileOnMouse.isOccupied && !tileAbove.isOccupied)
+                    if (tileAbove == null)
                     {
-                        spawnedUnit.transform.position = tileOnMouse.transform.position;
-                        tileOnMouse.isOccupied = true;
-                        tileAbove.isOccupied = true;
+                        Debug.LogWarning("CANTPLACE");
+                        Destroy(spawnedUnit);
                         break;
                     }
                     else
                     {
-                        Destroy(spawnedUnit);
-                        break;
+                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied)
+                        {
+                            spawnedUnit.transform.position = tileOnMouse.transform.position;
+                            tileOnMouse.isOccupied = true;
+                            tileAbove.isOccupied = true;
+                            break;
+                        }
+                        else
+                        {
+                            Destroy(spawnedUnit);
+                            break;
+                        }
                     }
-
-
                     
                 case unitEnum.house:
 
@@ -167,79 +250,114 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
                 case unitEnum.flag:
 
-
-                    if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileTwoAbove.isOccupied)
-                    {
-                        spawnedUnit.transform.position = tileOnMouse.transform.position;
-                        tileOnMouse.isOccupied = true;
-                        tileAbove.isOccupied = true;
-                        tileTwoAbove.isOccupied = true;
-                        break;
-                    }
-                    else
-                    {
-                        Destroy(spawnedUnit);
-                        break;
-                    }
-                case unitEnum.yacht:
-
-                    if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnRight.isOccupied)
-                    {
-                        spawnedUnit.transform.position = tileOnMouse.transform.position;
-                        tileOnMouse.isOccupied = true;
-                        tileAbove.isOccupied = true;
-                        tileOnRight.isOccupied = true;
-                        break;
-                    }
-                    else
-                    {
-                        Destroy(spawnedUnit);
-                        break;
-                    }
-                case unitEnum.train:
-                    
-                    if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnLeft.isOccupied)
-                    {
-                        spawnedUnit.transform.position = tileOnMouse.transform.position;
-                        tileOnMouse.isOccupied = true;
-                        tileAbove.isOccupied = true;
-                        tileOnLeft.isOccupied = true;
-                        break;
-                    }
-                    else
-                    {
-                        Destroy(spawnedUnit);
-                        break;
-                    }
-                case unitEnum.castle:
-
-                    /*if (tileAbove != null && tileOnRight != null && tileOnLeft != null && tileOnTwoLeft != null && 
-                        tileOnTwoRight != null && tileOnTwoLeftOneAbove != null && tileOnTwoRightOneAbove != null)
+                    if (tileAbove == null || tileBelow == null)
                     {
                         Debug.LogWarning("CANTPLACE");
                         Destroy(spawnedUnit);
                         break;
-                    }*/
-
-                    if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnRight.isOccupied && !tileOnLeft.isOccupied
-                        && !tileOnTwoRight.isOccupied && !tileOnTwoLeft.isOccupied && !tileOnTwoRightOneAbove.isOccupied && !tileOnTwoLeftOneAbove.isOccupied)
+                    }
+                    else
                     {
-                        spawnedUnit.transform.position = tileOnMouse.transform.position;
-                        tileOnMouse.isOccupied = true;
-                        tileAbove.isOccupied = true;
-                        tileOnRight.isOccupied = true;
-                        tileOnLeft.isOccupied = true;
-                        tileOnTwoRight.isOccupied = true;
-                        tileOnTwoLeft.isOccupied = true;
-                        tileOnTwoRightOneAbove.isOccupied = true;
-                        tileOnTwoLeftOneAbove.isOccupied = true;
+                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileBelow.isOccupied)
+                        {
+                            spawnedUnit.transform.position = tileOnMouse.transform.position;
+                            tileOnMouse.isOccupied = true;
+                            tileAbove.isOccupied = true;
+                            tileBelow.isOccupied = true;
+                            break;
+                        }
+                        else
+                        {
+                            Destroy(spawnedUnit);
+                            break;
+                        }
+                    }
+
+                case unitEnum.yacht:
+
+                    if (tileOnRight == null || tileAbove == null)
+                    {
+                        Debug.LogWarning("CANTPLACE");
+                        Destroy(spawnedUnit);
                         break;
                     }
                     else
                     {
+                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnRight.isOccupied)
+                        {
+                            spawnedUnit.transform.position = tileOnMouse.transform.position;
+                            tileOnMouse.isOccupied = true;
+                            tileAbove.isOccupied = true;
+                            tileOnRight.isOccupied = true;
+                            break;
+                        }
+                        else
+                        {
+                            Destroy(spawnedUnit);
+                            break;
+                        }
+                    }
+
+                    
+                case unitEnum.train:
+
+                    if (tileOnRight == null || tileOnLeft == null)
+                    {
+                        Debug.LogWarning("CANTPLACE");
                         Destroy(spawnedUnit);
                         break;
                     }
+                    else
+                    {
+                        if (!tileOnMouse.isOccupied && !tileOnLeft.isOccupied && !tileOnLeft.isOccupied)
+                        {
+                            spawnedUnit.transform.position = tileOnMouse.transform.position;
+                            tileOnMouse.isOccupied = true;
+                            tileOnRight.isOccupied = true;
+                            tileOnLeft.isOccupied = true;
+                            break;
+                        }
+                        else
+                        {
+                            Destroy(spawnedUnit);
+                            break;
+                        }
+                    }
+                    
+                    
+                case unitEnum.castle:
+
+                    if (tileAbove == null || tileOnRight == null || tileOnLeft == null || tileOnTwoLeft == null ||
+                        tileOnTwoRight == null || tileOnTwoLeftOneAbove == null || tileOnTwoRightOneAbove == null)
+                    {
+                        Debug.LogWarning("CANTPLACE");
+                        Destroy(spawnedUnit);
+                        break;
+                    }
+                    else
+                    {
+                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnRight.isOccupied && !tileOnLeft.isOccupied
+                        && !tileOnTwoRight.isOccupied && !tileOnTwoLeft.isOccupied && !tileOnTwoRightOneAbove.isOccupied && !tileOnTwoLeftOneAbove.isOccupied)
+                        {
+                            spawnedUnit.transform.position = tileOnMouse.transform.position;
+                            tileOnMouse.isOccupied = true;
+                            tileAbove.isOccupied = true;
+                            tileOnRight.isOccupied = true;
+                            tileOnLeft.isOccupied = true;
+                            tileOnTwoRight.isOccupied = true;
+                            tileOnTwoLeft.isOccupied = true;
+                            tileOnTwoRightOneAbove.isOccupied = true;
+                            tileOnTwoLeftOneAbove.isOccupied = true;
+                            break;
+                        }
+                        else
+                        {
+                            Destroy(spawnedUnit);
+                            break;
+                        }
+                    }
+
+                    
 
             }
 
