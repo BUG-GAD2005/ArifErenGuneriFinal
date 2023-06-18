@@ -325,7 +325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -129.17}
+  m_AnchoredPosition: {x: 0, y: -129.16998}
   m_SizeDelta: {x: 0, y: -258.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &41897651
@@ -918,7 +918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -133.74}
+  m_AnchoredPosition: {x: 0, y: -133.73999}
   m_SizeDelta: {x: 0, y: -267.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &163541954
@@ -1616,7 +1616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -107.85001}
+  m_AnchoredPosition: {x: 0, y: -107.850006}
   m_SizeDelta: {x: 0, y: -215.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &230505505
@@ -1751,7 +1751,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -107.93}
+  m_AnchoredPosition: {x: 0, y: -107.92999}
   m_SizeDelta: {x: 0, y: -229.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &243767730
@@ -1886,7 +1886,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -129.45}
+  m_AnchoredPosition: {x: 0, y: -129.45001}
   m_SizeDelta: {x: 0, y: -259.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &250434999
@@ -3665,7 +3665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -107.85}
+  m_AnchoredPosition: {x: 0, y: -107.850006}
   m_SizeDelta: {x: 0, y: -215.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &583044815
@@ -4722,7 +4722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -132.24}
+  m_AnchoredPosition: {x: 0, y: -132.23999}
   m_SizeDelta: {x: 0, y: -264.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &738868154
@@ -5058,7 +5058,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -52.85001}
+  m_AnchoredPosition: {x: 0, y: -52.850006}
   m_SizeDelta: {x: 0, y: -105.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &762403427
@@ -7609,7 +7609,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2067006636}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
         m_MethodName: DragPawn
         m_Mode: 1
@@ -8209,7 +8209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -52.849983}
+  m_AnchoredPosition: {x: 0, y: -52.849976}
   m_SizeDelta: {x: 0, y: -105.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1197080362
@@ -9636,7 +9636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -52.85001}
+  m_AnchoredPosition: {x: 0, y: -52.850006}
   m_SizeDelta: {x: 0, y: -105.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1507168156
@@ -9773,7 +9773,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -52.85001}
+  m_AnchoredPosition: {x: 0, y: -52.850006}
   m_SizeDelta: {x: 0, y: -105.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1571482195
@@ -11035,7 +11035,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -107.85}
+  m_AnchoredPosition: {x: 0, y: -107.850006}
   m_SizeDelta: {x: 0, y: -215.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1818264768
@@ -11476,7 +11476,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -107.8}
+  m_AnchoredPosition: {x: 0, y: -107.79999}
   m_SizeDelta: {x: 0, y: -215.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1910880936
@@ -11899,7 +11899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -107.799995}
+  m_AnchoredPosition: {x: 0, y: -107.79999}
   m_SizeDelta: {x: 0, y: -215.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1969233145
@@ -12947,26 +12947,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2067006637}
-  - component: {fileID: 2067006636}
+  - component: {fileID: 2067006638}
   m_Layer: 0
-  m_Name: PlayerInputs
+  m_Name: PlayerStats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2067006636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2067006635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad82469df8e05574ba028f09d60f9839, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2067006637
 Transform:
   m_ObjectHideFlags: 0
@@ -12982,6 +12970,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2067006638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067006635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11fe5ec35e19c7049ac9fc811b44ff8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCoin: 10
+  currentGem: 10
+  coinText: {fileID: 2017238076}
+  gemText: {fileID: 2014365473}
 --- !u!1 &2075258161
 GameObject:
   m_ObjectHideFlags: 0

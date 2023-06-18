@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb817693d5e7a2745a256634f26de39d, type: 3}
-  m_Name: A-Building
+  m_Name: Yacht
   m_EditorClassIdentifier: 
-  buildingName: 
-  buildingSprite: {fileID: 0}
-  costCoin: 0
-  costGem: 0
-  gainCoin: 0
-  gainGem: 0
-  generateTime: 0
+  coinCost: 10
+  gemCost: 10
+  coinGen: 3
+  gemGen: 3
+  generateTime: 2

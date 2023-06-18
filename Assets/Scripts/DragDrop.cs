@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,6 +19,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 {
     public unitEnum spawnedUnitEnum;
     
+    //Prefabs to spawn if possible
     [SerializeField] private GameObject pawnPrefab;
     [SerializeField] private GameObject housePrefab;
     [SerializeField] private GameObject flagPrefab;
@@ -25,11 +27,14 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     [SerializeField] private GameObject trainPrefab;
     [SerializeField] private GameObject castlePrefab;
 
+
+
     [SerializeField] private Camera mainCamera;
     private CanvasGroup canvasGroup;
     private GridManager gridManager;
 
     public GameObject spawnedUnit;
+    private Building building;
 
     private void Awake()
     {
@@ -85,6 +90,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
             spawnedUnit = Instantiate(castlePrefab, objectPos, Quaternion.identity);
             spawnedUnitEnum = unitEnum.castle;
         }
+
+        building = spawnedUnit.GetComponent<Building>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -95,7 +102,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.LogWarning("OnDrag");
+        //Debug.LogWarning("OnDrag");
         Vector3 mousePos = Input.mousePosition;
         Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
         spawnedUnit.transform.position = objectPos;
@@ -226,6 +233,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             spawnedUnit.transform.position = tileOnMouse.transform.position;
                             tileOnMouse.isOccupied = true;
                             tileAbove.isOccupied = true;
+                            building.isPlaced = true;
                             break;
                         }
                         else
@@ -241,6 +249,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     {
                         spawnedUnit.transform.position = tileOnMouse.transform.position;
                         tileOnMouse.isOccupied = true;
+                        building.isPlaced = true;
                         break;
                     }
                     else
@@ -264,6 +273,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             tileOnMouse.isOccupied = true;
                             tileAbove.isOccupied = true;
                             tileBelow.isOccupied = true;
+                            building.isPlaced = true;
                             break;
                         }
                         else
@@ -289,6 +299,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             tileOnMouse.isOccupied = true;
                             tileAbove.isOccupied = true;
                             tileOnRight.isOccupied = true;
+                            building.isPlaced = true;
                             break;
                         }
                         else
@@ -315,6 +326,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             tileOnMouse.isOccupied = true;
                             tileOnRight.isOccupied = true;
                             tileOnLeft.isOccupied = true;
+                            building.isPlaced = true;
                             break;
                         }
                         else
@@ -348,6 +360,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             tileOnTwoLeft.isOccupied = true;
                             tileOnTwoRightOneAbove.isOccupied = true;
                             tileOnTwoLeftOneAbove.isOccupied = true;
+                            building.isPlaced = true;
                             break;
                         }
                         else

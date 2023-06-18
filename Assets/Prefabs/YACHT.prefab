@@ -93,6 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 872210521815974313}
+  - component: {fileID: 3633375977195522437}
   m_Layer: 0
   m_Name: YACHT
   m_TagString: Untagged
@@ -116,6 +117,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3633375977195522437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319541730559197867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d94cc0bfc42e6a45b5e1dc9cd407e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingType: 3
+  buildingData: {fileID: 11400000, guid: d2ee205eb9b0c9c479ade5a9d75002cf, type: 2}
+  isPlaced: 0
+  playerStats: {fileID: 0}
 --- !u!1 &5577322645559544033
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,13 +7,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Building")]
 public class Building_SO : ScriptableObject
 {
-    public string buildingName;
-    public Sprite buildingSprite;
-
-    public int costCoin;
-    public int costGem; 
-    public int gainCoin;
-    public int gainGem;
-
+    // Coin needed to build
+    public int coinCost;
+    //Gem needed to build
+    public int gemCost;
+    //Coin this building generates over generateTime
+    public int coinGen;
+    //Gem this building generates over generateTime
+    public int gemGen;
+    //Time this building generates resources
     public float generateTime;
 }
