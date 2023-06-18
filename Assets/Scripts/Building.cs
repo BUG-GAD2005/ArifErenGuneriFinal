@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public enum buildingType
+public enum BuildingType
 {
     pawn,
     house,
@@ -15,7 +15,7 @@ public enum buildingType
 
 public class Building : MonoBehaviour
 {
-    public buildingType buildingType;
+    public BuildingType buildingType;
     [SerializeField] private Building_SO buildingData;
     private bool coroutineStarted = false;
     public bool isPlaced;
