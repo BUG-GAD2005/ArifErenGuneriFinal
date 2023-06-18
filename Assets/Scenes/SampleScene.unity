@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4afa61795503c4da31a795e512dc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedUnitEnum: 0
+  unitEnum: 2
   pawnPrefab: {fileID: 2244845257201434414, guid: a4232f2c0fdbdff4195848be062d083f, type: 3}
   housePrefab: {fileID: 8705300319918168556, guid: 8ae81f7dc990b7b479c728cc5c0c3b14, type: 3}
   flagPrefab: {fileID: 5515472013801769050, guid: e7c5ea6901416f54099622fc7b392b80, type: 3}
@@ -5758,7 +5758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4afa61795503c4da31a795e512dc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedUnitEnum: 0
+  unitEnum: 4
   pawnPrefab: {fileID: 2244845257201434414, guid: a4232f2c0fdbdff4195848be062d083f, type: 3}
   housePrefab: {fileID: 8705300319918168556, guid: 8ae81f7dc990b7b479c728cc5c0c3b14, type: 3}
   flagPrefab: {fileID: 5515472013801769050, guid: e7c5ea6901416f54099622fc7b392b80, type: 3}
@@ -6260,8 +6260,8 @@ GameObject:
   - component: {fileID: 947774867}
   - component: {fileID: 947774870}
   - component: {fileID: 947774869}
-  - component: {fileID: 947774868}
   - component: {fileID: 947774871}
+  - component: {fileID: 947774868}
   - component: {fileID: 947774872}
   m_Layer: 5
   m_Name: HOUSEButton
@@ -6395,7 +6395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4afa61795503c4da31a795e512dc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedUnitEnum: 0
+  unitEnum: 1
   pawnPrefab: {fileID: 2244845257201434414, guid: a4232f2c0fdbdff4195848be062d083f, type: 3}
   housePrefab: {fileID: 8705300319918168556, guid: 8ae81f7dc990b7b479c728cc5c0c3b14, type: 3}
   flagPrefab: {fileID: 5515472013801769050, guid: e7c5ea6901416f54099622fc7b392b80, type: 3}
@@ -6928,7 +6928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4afa61795503c4da31a795e512dc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedUnitEnum: 0
+  unitEnum: 5
   pawnPrefab: {fileID: 2244845257201434414, guid: a4232f2c0fdbdff4195848be062d083f, type: 3}
   housePrefab: {fileID: 8705300319918168556, guid: 8ae81f7dc990b7b479c728cc5c0c3b14, type: 3}
   flagPrefab: {fileID: 5515472013801769050, guid: e7c5ea6901416f54099622fc7b392b80, type: 3}
@@ -7671,7 +7671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4afa61795503c4da31a795e512dc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedUnitEnum: 0
+  unitEnum: 0
   pawnPrefab: {fileID: 2244845257201434414, guid: a4232f2c0fdbdff4195848be062d083f, type: 3}
   housePrefab: {fileID: 8705300319918168556, guid: 8ae81f7dc990b7b479c728cc5c0c3b14, type: 3}
   flagPrefab: {fileID: 5515472013801769050, guid: e7c5ea6901416f54099622fc7b392b80, type: 3}
@@ -12794,7 +12794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4afa61795503c4da31a795e512dc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedUnitEnum: 0
+  unitEnum: 3
   pawnPrefab: {fileID: 2244845257201434414, guid: a4232f2c0fdbdff4195848be062d083f, type: 3}
   housePrefab: {fileID: 8705300319918168556, guid: 8ae81f7dc990b7b479c728cc5c0c3b14, type: 3}
   flagPrefab: {fileID: 5515472013801769050, guid: e7c5ea6901416f54099622fc7b392b80, type: 3}

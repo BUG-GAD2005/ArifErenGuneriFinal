@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum unitEnum
+public enum UnitEnum
 {
     pawn,
     house,
@@ -17,16 +17,15 @@ public enum unitEnum
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public unitEnum spawnedUnitEnum;
+    public UnitEnum unitEnum;
     
-    //Prefabs to spawn if possible
+    //Prefabs to spawn
     [SerializeField] private GameObject pawnPrefab;
     [SerializeField] private GameObject housePrefab;
     [SerializeField] private GameObject flagPrefab;
     [SerializeField] private GameObject yachtPrefab;
     [SerializeField] private GameObject trainPrefab;
     [SerializeField] private GameObject castlePrefab;
-
 
 
     [SerializeField] private Camera mainCamera;
@@ -42,57 +41,13 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         gridManager = FindObjectOfType<GridManager>();
     }
 
-    void Update()
-    {
-        
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.LogWarning("OnPointerDown");
 
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
-
-        if (gameObject.name == "PAWNButton")
-        {
-            Debug.LogWarning("Instantiate Pawn");
-            spawnedUnit = Instantiate(pawnPrefab, objectPos, Quaternion.identity);
-            spawnedUnitEnum = unitEnum.pawn;
-        }
-        else if (gameObject.name == "HOUSEButton")
-        {
-            Debug.LogWarning("Instantiate House");
-            spawnedUnit = Instantiate(housePrefab, objectPos, Quaternion.identity);
-            spawnedUnitEnum = unitEnum.house;
-        }
-        else if (gameObject.name == "FLAGButton")
-        {
-            Debug.LogWarning("Instantiate Flag");
-            spawnedUnit = Instantiate(flagPrefab,objectPos, Quaternion.identity);
-            spawnedUnitEnum = unitEnum.flag;
-        }
-        else if (gameObject.name == "YACHTButton")
-        {
-            Debug.LogWarning("Instantiate Yacht");
-            spawnedUnit = Instantiate(yachtPrefab, objectPos, Quaternion.identity);
-            spawnedUnitEnum= unitEnum.yacht;
-        }
-        else if (gameObject.name == "TRAINButton")
-        {
-            Debug.LogWarning("Instantiate Train");
-            spawnedUnit = Instantiate(trainPrefab, objectPos, Quaternion.identity);
-            spawnedUnitEnum = unitEnum.train;
-        }
-        else if (gameObject.name == "CASTLEButton")
-        {
-            Debug.LogWarning("Instantiate Castle");
-            spawnedUnit = Instantiate(castlePrefab, objectPos, Quaternion.identity);
-            spawnedUnitEnum = unitEnum.castle;
-        }
-
-        building = spawnedUnit.GetComponent<Building>();
+        SpawnCorrectBuildingType();
     }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -102,25 +57,83 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.LogWarning("OnDrag");
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
-        spawnedUnit.transform.position = objectPos;
+        DragSpawnedBuilding();
     }
+
 
     public void OnEndDrag(PointerEventData eventData)
     {
         Debug.LogWarning("OnEndDrag");
         canvasGroup.blocksRaycasts = true;
 
+        CheckTilesAndPlaceBuilding();
+    }
+    
+    private void SpawnCorrectBuildingType()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
+
+        switch (unitEnum)
+        {
+            case UnitEnum.pawn:
+
+                Debug.LogWarning("Instantiate Pawn");
+                spawnedUnit = Instantiate(pawnPrefab, objectPos, Quaternion.identity);
+                break;
+
+            case UnitEnum.house:
+
+                Debug.LogWarning("Instantiate House");
+                spawnedUnit = Instantiate(housePrefab, objectPos, Quaternion.identity);
+                break;
+
+            case UnitEnum.flag:
+
+                Debug.LogWarning("Instantiate Flag");
+                spawnedUnit = Instantiate(flagPrefab, objectPos, Quaternion.identity);
+                break;
+
+            case UnitEnum.yacht:
+
+                Debug.LogWarning("Instantiate Yacht");
+                spawnedUnit = Instantiate(yachtPrefab, objectPos, Quaternion.identity);
+                break;
+
+            case UnitEnum.train:
+
+                Debug.LogWarning("Instantiate Train");
+                spawnedUnit = Instantiate(trainPrefab, objectPos, Quaternion.identity);
+                break;
+
+            case UnitEnum.castle:
+
+                Debug.LogWarning("Instantiate Castle");
+                spawnedUnit = Instantiate(castlePrefab, objectPos, Quaternion.identity);
+                break;
+
+        }
+
+        building = spawnedUnit.GetComponent<Building>();
+    }
+    
+    private void DragSpawnedBuilding()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
+        spawnedUnit.transform.position = objectPos;
+    }
+
+    private void CheckTilesAndPlaceBuilding()
+    {
         Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         RaycastHit2D hit = Physics2D.Raycast(ray, ray);
         if (hit.transform != null)
         {
             Tile tileOnMouse = hit.collider.GetComponent<Tile>();
-            
+
             Tile tileAbove;
-            
+
             if (tileOnMouse.y + 1 < 10)
             {
                 tileAbove = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x, tileOnMouse.y + 1));
@@ -157,7 +170,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
             Tile tileOnLeft;
 
-            if (tileOnMouse.x -1 > -1)
+            if (tileOnMouse.x - 1 > -1)
             {
                 tileOnLeft = gridManager.GetTileAtPos(new Vector2(tileOnMouse.x - 1, tileOnMouse.y));
             }
@@ -216,9 +229,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
 
 
-            switch (spawnedUnitEnum)
+            switch (unitEnum)
             {
-                case unitEnum.pawn:
+                case UnitEnum.pawn:
 
                     if (tileAbove == null)
                     {
@@ -242,8 +255,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             break;
                         }
                     }
-                    
-                case unitEnum.house:
+
+                case UnitEnum.house:
 
                     if (!tileOnMouse.isOccupied)
                     {
@@ -257,7 +270,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                         Destroy(spawnedUnit);
                         break;
                     }
-                case unitEnum.flag:
+                case UnitEnum.flag:
 
                     if (tileAbove == null || tileBelow == null)
                     {
@@ -283,7 +296,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                         }
                     }
 
-                case unitEnum.yacht:
+                case UnitEnum.yacht:
 
                     if (tileOnRight == null || tileAbove == null)
                     {
@@ -309,8 +322,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                         }
                     }
 
-                    
-                case unitEnum.train:
+
+                case UnitEnum.train:
 
                     if (tileOnRight == null || tileOnLeft == null)
                     {
@@ -335,9 +348,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             break;
                         }
                     }
-                    
-                    
-                case unitEnum.castle:
+
+
+                case UnitEnum.castle:
 
                     if (tileAbove == null || tileOnRight == null || tileOnLeft == null || tileOnTwoLeft == null ||
                         tileOnTwoRight == null || tileOnTwoLeftOneAbove == null || tileOnTwoRightOneAbove == null)
@@ -370,7 +383,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                         }
                     }
 
-                    
+
 
             }
 
@@ -381,6 +394,5 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         }
     }
 
-    
 
 }
