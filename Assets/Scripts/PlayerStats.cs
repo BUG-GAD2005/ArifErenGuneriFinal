@@ -5,8 +5,8 @@ using TMPro;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int currentCoin = 10;
-    public int currentGem = 10;
+    public int currentCoin = 0;
+    public int currentGem = 0;
     public TMP_Text coinText;
     public TMP_Text gemText;
     
@@ -15,11 +15,5 @@ public class PlayerStats : MonoBehaviour
     {
         coinText.text = currentCoin.ToString();
         gemText.text = currentGem.ToString();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

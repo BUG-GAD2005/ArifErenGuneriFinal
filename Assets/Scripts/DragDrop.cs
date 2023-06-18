@@ -4,20 +4,11 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-public enum UnitEnum
-{
-    pawn,
-    house,
-    flag,
-    yacht,
-    train,
-    castle
-}
+using UnityEngine.Pool;
 
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    public UnitEnum unitEnum;
+    public BuildingType buildingType;
     
     //Prefabs to spawn
     [SerializeField] private GameObject pawnPrefab;
@@ -27,11 +18,21 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     [SerializeField] private GameObject trainPrefab;
     [SerializeField] private GameObject castlePrefab;
 
+    //Scriptable object references in order to check if the player can afford the cost.
+    [SerializeField] private Building_SO pawnData;
+    [SerializeField] private Building_SO houseData;
+    [SerializeField] private Building_SO flagData;
+    [SerializeField] private Building_SO yachtData;
+    [SerializeField] private Building_SO trainData;
+    [SerializeField] private Building_SO castleData;
 
+    [SerializeField] private PlayerStats playerStats;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] GameObject blocker;
+
     private CanvasGroup canvasGroup;
     private GridManager gridManager;
-
+    private bool isAffordable;
     public GameObject spawnedUnit;
     private Building building;
 
@@ -41,11 +42,20 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         gridManager = FindObjectOfType<GridManager>();
     }
 
+    private void Update()
+    {
+        CheckIfAffordable();
+    }
+
+
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.LogWarning("OnPointerDown");
 
-        SpawnCorrectBuildingType();
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
+        SpawnIfAffordable(objectPos);
+
     }
 
 
@@ -53,6 +63,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         Debug.LogWarning("OnBeginDrag");
         canvasGroup.blocksRaycasts = false;
+        building = spawnedUnit.GetComponent<Building>();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -69,52 +80,192 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         CheckTilesAndPlaceBuilding();
     }
     
-    private void SpawnCorrectBuildingType()
+    private void CheckIfAffordable()
     {
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
-
-        switch (unitEnum)
+        switch (buildingType)
         {
-            case UnitEnum.pawn:
+            case BuildingType.pawn:
 
-                Debug.LogWarning("Instantiate Pawn");
-                spawnedUnit = Instantiate(pawnPrefab, objectPos, Quaternion.identity);
-                break;
+                if (playerStats.currentCoin < pawnData.coinCost)
+                {
+                    blocker.SetActive(true);
+                    isAffordable = false;
+                    break;
+                }
+                else
+                {
+                    blocker.SetActive(false);
+                    isAffordable = true;
+                    break;
+                }
 
-            case UnitEnum.house:
 
-                Debug.LogWarning("Instantiate House");
-                spawnedUnit = Instantiate(housePrefab, objectPos, Quaternion.identity);
-                break;
+            case BuildingType.house:
 
-            case UnitEnum.flag:
+                if (playerStats.currentCoin < houseData.coinCost || playerStats.currentGem < houseData.gemCost)
+                {
+                    blocker.SetActive(true);
+                    isAffordable = false;
+                    break;
+                }
+                else
+                {
+                    blocker.SetActive(false);
+                    isAffordable = true;
+                    break;
+                }
 
-                Debug.LogWarning("Instantiate Flag");
-                spawnedUnit = Instantiate(flagPrefab, objectPos, Quaternion.identity);
-                break;
+            case BuildingType.flag:
 
-            case UnitEnum.yacht:
+                if (playerStats.currentCoin < flagData.coinCost || playerStats.currentGem < flagData.gemCost)
+                {
+                    blocker.SetActive(true);
+                    isAffordable = false;
+                    break;
+                }
+                else
+                {
+                    blocker.SetActive(false);
+                    isAffordable = true;
+                    break;
+                }
 
-                Debug.LogWarning("Instantiate Yacht");
-                spawnedUnit = Instantiate(yachtPrefab, objectPos, Quaternion.identity);
-                break;
+            case BuildingType.yacht:
 
-            case UnitEnum.train:
+                if (playerStats.currentCoin < yachtData.coinCost || playerStats.currentGem < yachtData.gemCost)
+                {
+                    blocker.SetActive(true);
+                    isAffordable = false;
+                    break;
+                }
+                else
+                {
+                    blocker.SetActive(false);
+                    isAffordable = true;
+                    break;
+                }
 
-                Debug.LogWarning("Instantiate Train");
-                spawnedUnit = Instantiate(trainPrefab, objectPos, Quaternion.identity);
-                break;
+            case BuildingType.train:
 
-            case UnitEnum.castle:
+                if (playerStats.currentCoin < trainData.coinCost || playerStats.currentGem < trainData.gemCost)
+                {
+                    blocker.SetActive(true);
+                    isAffordable = false;
+                    break;
+                }
+                else
+                {
+                    blocker.SetActive(false);
+                    isAffordable = true;
+                    break;
+                }
 
-                Debug.LogWarning("Instantiate Castle");
-                spawnedUnit = Instantiate(castlePrefab, objectPos, Quaternion.identity);
-                break;
+            case BuildingType.castle:
 
+                if (playerStats.currentCoin < castleData.coinCost || playerStats.currentGem < castleData.gemCost)
+                {
+                    blocker.SetActive(true);
+                    isAffordable = false;
+                    break;
+                }
+                else
+                {
+                    blocker.SetActive(false);
+                    isAffordable = true;
+                    break;
+                }
         }
+    }
+    
+    private void SpawnIfAffordable(Vector3 objectPos)
+    {
+        switch (buildingType)
+        {
+            case BuildingType.pawn:
 
-        building = spawnedUnit.GetComponent<Building>();
+                if (isAffordable)
+                {
+                    Debug.LogWarning("Instantiate Pawn");
+                    spawnedUnit = Instantiate(pawnPrefab, objectPos, Quaternion.identity);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning("CANT BUY!");
+                    break;
+                }
+
+
+            case BuildingType.house:
+
+                if (isAffordable)
+                {
+                    Debug.LogWarning("Instantiate House");
+                    spawnedUnit = Instantiate(housePrefab, objectPos, Quaternion.identity);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning("CANT BUY!");
+                    break;
+                }
+
+            case BuildingType.flag:
+
+                if (isAffordable)
+                {
+                    Debug.LogWarning("Instantiate Flag");
+                    spawnedUnit = Instantiate(flagPrefab, objectPos, Quaternion.identity);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning("CANT BUY!");
+                    break;
+                }
+
+            case BuildingType.yacht:
+
+                if (isAffordable)
+                {
+                    Debug.LogWarning("Instantiate Yacht");
+                    spawnedUnit = Instantiate(yachtPrefab, objectPos, Quaternion.identity);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning("CANT BUY!");
+                    break;
+                }
+
+            case BuildingType.train:
+
+                if (isAffordable)
+                {
+                    Debug.LogWarning("Instantiate Train");
+                    spawnedUnit = Instantiate(trainPrefab, objectPos, Quaternion.identity);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning("CANT BUY!");
+                    break;
+                }
+
+            case BuildingType.castle:
+
+                if (isAffordable)
+                {
+                    Debug.LogWarning("Instantiate Castle");
+                    spawnedUnit = Instantiate(castlePrefab, objectPos, Quaternion.identity);
+                    break;
+                }
+                else
+                {
+                    Debug.LogWarning("CANT BUY!");
+                    break;
+                }
+        }
     }
     
     private void DragSpawnedBuilding()
@@ -229,9 +380,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
 
 
-            switch (unitEnum)
+            switch (buildingType)
             {
-                case UnitEnum.pawn:
+                case BuildingType.pawn:
 
                     if (tileAbove == null)
                     {
@@ -256,7 +407,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                         }
                     }
 
-                case UnitEnum.house:
+                case BuildingType.house:
 
                     if (!tileOnMouse.isOccupied)
                     {
@@ -270,7 +421,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                         Destroy(spawnedUnit);
                         break;
                     }
-                case UnitEnum.flag:
+                case BuildingType.flag:
 
                     if (tileAbove == null || tileBelow == null)
                     {
@@ -296,7 +447,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                         }
                     }
 
-                case UnitEnum.yacht:
+                case BuildingType.yacht:
 
                     if (tileOnRight == null || tileAbove == null)
                     {
@@ -323,7 +474,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
 
 
-                case UnitEnum.train:
+                case BuildingType.train:
 
                     if (tileOnRight == null || tileOnLeft == null)
                     {
@@ -350,7 +501,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
 
 
-                case UnitEnum.castle:
+                case BuildingType.castle:
 
                     if (tileAbove == null || tileOnRight == null || tileOnLeft == null || tileOnTwoLeft == null ||
                         tileOnTwoRight == null || tileOnTwoLeftOneAbove == null || tileOnTwoRightOneAbove == null)
