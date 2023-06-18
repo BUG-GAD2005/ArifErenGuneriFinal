@@ -63,7 +63,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         Debug.LogWarning("OnBeginDrag");
         canvasGroup.blocksRaycasts = false;
-        building = spawnedUnit.GetComponent<Building>();
+
+        if (spawnedUnit!= null)
+        {
+            building = spawnedUnit.GetComponent<Building>();
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -77,7 +81,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         Debug.LogWarning("OnEndDrag");
         canvasGroup.blocksRaycasts = true;
 
-        CheckTilesAndPlaceBuilding();
+        if (spawnedUnit!= null)
+        {
+            CheckTilesAndPlaceBuilding();
+        }
     }
     
     private void CheckIfAffordable()
@@ -272,7 +279,12 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         Vector3 mousePos = Input.mousePosition;
         Vector3 objectPos = mainCamera.ScreenToWorldPoint(mousePos);
-        spawnedUnit.transform.position = objectPos;
+
+        if (spawnedUnit!= null)
+        {
+            spawnedUnit.transform.position = objectPos;
+        }
+        
     }
 
     private void CheckTilesAndPlaceBuilding()
@@ -392,12 +404,14 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
                     else
                     {
-                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied)
+                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied) // If the tiles are available, puts the spawned unit to those tiles.
                         {
                             spawnedUnit.transform.position = tileOnMouse.transform.position;
                             tileOnMouse.isOccupied = true;
                             tileAbove.isOccupied = true;
                             building.isPlaced = true;
+                            playerStats.currentCoin -= pawnData.coinCost;
+                            playerStats.coinText.text = playerStats.currentCoin.ToString();
                             break;
                         }
                         else
@@ -409,11 +423,15 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
                 case BuildingType.house:
 
-                    if (!tileOnMouse.isOccupied)
+                    if (!tileOnMouse.isOccupied) // If the tiles are available, puts the spawned unit to those tiles.
                     {
                         spawnedUnit.transform.position = tileOnMouse.transform.position;
                         tileOnMouse.isOccupied = true;
                         building.isPlaced = true;
+                        playerStats.currentCoin -= houseData.coinCost;
+                        playerStats.currentGem -= houseData.gemCost;
+                        playerStats.coinText.text = playerStats.currentCoin.ToString();
+                        playerStats.gemText.text = playerStats.currentGem.ToString();
                         break;
                     }
                     else
@@ -431,13 +449,17 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
                     else
                     {
-                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileBelow.isOccupied)
+                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileBelow.isOccupied) // If the tiles are available, puts the spawned unit to those tiles.
                         {
                             spawnedUnit.transform.position = tileOnMouse.transform.position;
                             tileOnMouse.isOccupied = true;
                             tileAbove.isOccupied = true;
                             tileBelow.isOccupied = true;
                             building.isPlaced = true;
+                            playerStats.currentCoin -= flagData.coinCost;
+                            playerStats.currentGem -= flagData.gemCost;
+                            playerStats.coinText.text = playerStats.currentCoin.ToString();
+                            playerStats.gemText.text = playerStats.currentGem.ToString();
                             break;
                         }
                         else
@@ -457,13 +479,17 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
                     else
                     {
-                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnRight.isOccupied)
+                        if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnRight.isOccupied) // If the tiles are available, puts the spawned unit to those tiles.
                         {
                             spawnedUnit.transform.position = tileOnMouse.transform.position;
                             tileOnMouse.isOccupied = true;
                             tileAbove.isOccupied = true;
                             tileOnRight.isOccupied = true;
                             building.isPlaced = true;
+                            playerStats.currentCoin -= yachtData.coinCost;
+                            playerStats.currentGem -= yachtData.gemCost;
+                            playerStats.coinText.text = playerStats.currentCoin.ToString();
+                            playerStats.gemText.text = playerStats.currentGem.ToString();
                             break;
                         }
                         else
@@ -484,13 +510,17 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
                     else
                     {
-                        if (!tileOnMouse.isOccupied && !tileOnLeft.isOccupied && !tileOnLeft.isOccupied)
+                        if (!tileOnMouse.isOccupied && !tileOnLeft.isOccupied && !tileOnLeft.isOccupied) // If the tiles are available, puts the spawned unit to those tiles.
                         {
                             spawnedUnit.transform.position = tileOnMouse.transform.position;
                             tileOnMouse.isOccupied = true;
                             tileOnRight.isOccupied = true;
                             tileOnLeft.isOccupied = true;
                             building.isPlaced = true;
+                            playerStats.currentCoin -= trainData.coinCost;
+                            playerStats.currentGem -= trainData.gemCost;
+                            playerStats.coinText.text = playerStats.currentCoin.ToString();
+                            playerStats.gemText.text = playerStats.currentGem.ToString();
                             break;
                         }
                         else
@@ -512,6 +542,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                     }
                     else
                     {
+                        // If the tiles are available, puts the spawned unit to those tiles.
                         if (!tileOnMouse.isOccupied && !tileAbove.isOccupied && !tileOnRight.isOccupied && !tileOnLeft.isOccupied
                         && !tileOnTwoRight.isOccupied && !tileOnTwoLeft.isOccupied && !tileOnTwoRightOneAbove.isOccupied && !tileOnTwoLeftOneAbove.isOccupied)
                         {
@@ -525,6 +556,10 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                             tileOnTwoRightOneAbove.isOccupied = true;
                             tileOnTwoLeftOneAbove.isOccupied = true;
                             building.isPlaced = true;
+                            playerStats.currentCoin -= castleData.coinCost;
+                            playerStats.currentGem -= castleData.gemCost;
+                            playerStats.coinText.text = playerStats.currentCoin.ToString();
+                            playerStats.gemText.text = playerStats.currentGem.ToString();
                             break;
                         }
                         else
